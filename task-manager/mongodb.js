@@ -1,10 +1,18 @@
+//CRUD create read update delete
+
+const { MongoClient, ObjectID } = require('mongodb'); //Destructured
+
+/*
+//------This code is similar as the obove code---//
 const mongodb = require('mongodb');
-const MongoCliet = mongodb.MongoClient;
+const MongoClient = mongodb.MongoClient;
+const ObjectId = mongodb.ObjectID
+*/
 
 const connectionURL = 'mongodb://127.0.0.1:27017';
 const databaseName = 'task-manager';
 
-MongoCliet.connect(
+MongoClient.connect(
     connectionURL,
     { useNewUrlParser: true, useUnifiedTopology: true },
     (error, client) => {
@@ -14,61 +22,23 @@ MongoCliet.connect(
 
         const db = client.db(databaseName);
 
-        // db.collection('users').insertOne(
-        //     {
-        //         name: 'Robinson',
-        //         age: 32,
-        //     },
-        //     (error, result) => {
-        //         if (error) {
-        //             return console.log('Unable to insert user');
-        //         }
+        db.collection('tasks').deleteOne({
+            description: "Do laundry"
+        }).then((result) => {
+            console.log(result)
+        }).catch((error) => {
+            console.log(error)
+        });
 
-        //         console.log(result.ops)
-        //     });
 
-        // db.collection('users').insertMany([
-        //     {
-        //         name: 'Kristine',
-        //         age: 32
-        //     }, {
-        //         name:'Thor',
-        //         age:7
-        //     }, {
-        //         name:'Lexy',
-        //         age:2
-        //     }
-        // ], (error, result) => {
-        //     if(error) {
-        //         return console.log('Unable to insert user')
-        //     }
+        // db.collection('tasks').deleteMany({
+        //      completed: true
+        //     }).then((result) => {
+        //     console.log(result)
+        // }).catch((error) => {
+        //     console.log(error)
+        // })
 
-        //     console.log(result.ops)
-        // });
+        
 
-        // Challenge: Insert 3 tasks into a new task collection
-        db.collection('tasks').insertMany(
-            [
-                {
-                    description: 'Do laundry',
-                    completed: true,
-                },
-                {
-                    description: 'Walk the dogs',
-                    completed: false,
-                },
-                {
-                    description: 'Clean the house',
-                    completed: false,
-                },
-            ],
-            (error, result) => {
-                if (error) {
-                    return console.log('Unable to insert task');
-                }
-
-                console.log(result.ops);
-            }
-        );
-    }
-);
+    });

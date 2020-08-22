@@ -6,8 +6,7 @@
 // 3. Test your work by running the script
 
 const tasks = {
-  tasks: [
-    {
+  tasks: [{
       text: 'Grocery shopping',
       completed: true
     },
