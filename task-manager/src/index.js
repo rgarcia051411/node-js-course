@@ -21,3 +21,8 @@ const router = new express.Router();
 app.listen(port, () => {
     console.log('Server is up on port' + port);
 });
+
+
+const myFuntion = async () => {
+    
+}
