@@ -58,7 +58,7 @@ router.patch('/users/:id', async (req, res) => {
         return allowedUpdates.includes(update); //.include is a method that will go through the whole list of array and check if the given parameter is present in the original array. 
     });
 
-    if (!ObjectID.isValid(_id)) {
+    if (!ObjectId.isValid(_id)) {
         return res.status(404).send()
     };
 
@@ -71,10 +71,15 @@ router.patch('/users/:id', async (req, res) => {
 
 
     try {
-        const user = await User.findByIdAndUpdate(_id, req.body, {
-            new: true,
-            runValidators: true
-        });
+
+
+        const user = await User.findByIdAndUpdate(_id);
+
+        updates.forEach((update) => user[update] = req.body[update]);
+
+        await user.save();
+
+
 
         if (!user) {
             return res.status(404).send()
